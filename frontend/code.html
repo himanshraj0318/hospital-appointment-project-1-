@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-error-container":"#93000a","surface-bright":"#f8f9ff","inverse-primary":"#b4c5ff","background":"#f8f9ff","surface-container-highest":"#d3e4fe","tertiary-fixed-dim":"#ffb4ab","tertiary-fixed":"#ffdad6","inverse-surface":"#213145","tertiary":"#ae0010","on-tertiary-fixed":"#410002","on-background":"#0b1c30","error":"#ba1a1a","surface-tint":"#0053db","secondary-container":"#4069f2","surface":"#f8f9ff","primary-fixed-dim":"#b4c5ff","on-surface-variant":"#434655","on-tertiary-fixed-variant":"#93000b","surface-dim":"#cbdbf5","secondary-fixed":"#dce1ff","outline-variant":"#c3c6d7","on-secondary-fixed-variant":"#0039b5","on-secondary":"#ffffff","secondary-fixed-dim":"#b7c4ff","primary-container":"#2563eb","surface-container":"#e5eeff","on-primary":"#ffffff","tertiary-container":"#d52022","surface-container-low":"#eff4ff","on-secondary-container":"#fffbff","on-tertiary-container":"#ffecea","on-error":"#ffffff","on-primary-fixed":"#00174b","secondary":"#1d4ed8","surface-container-lowest":"#ffffff","surface-container-high":"#dce9ff","on-secondary-fixed":"#001551","on-primary-fixed-variant":"#003ea8","error-container":"#ffdad6","on-primary-container":"#eeefff","primary-fixed":"#dbe1ff","surface-variant":"#d3e4fe","on-tertiary":"#ffffff","on-surface":"#0b1c30","inverse-on-surface":"#eaf1ff","outline":"#737686","primary":"#004ac6"},borderRadius:{DEFAULT:"0.125rem",lg:"0.25rem",xl:"0.5rem",full:"0.75rem"},spacing:{margin:"1rem","space-sm":"0.5rem",gutter:"1rem","space-md":"0.75rem","space-xs":"0.25rem","margin-desktop":"2rem","space-xl":"2rem","space-lg":"1.25rem","gutter-desktop":"1.5rem"},fontFamily:{"body-lg":["Inter"],"headline-lg":["Inter"],"headline-md":["Inter"],"body-sm":["Inter"],"body-md":["Inter"],"headline-sm":["Inter"],"label-sm":["Inter"],"label-lg":["Inter"],"label-md":["Inter"],"headline-lg-mobile":["Inter"]},fontSize:{"body-lg":["16px",{lineHeight:"24px",fontWeight:"400"}],"headline-lg":["32px",{lineHeight:"40px",letterSpacing:"-0.02em",fontWeight:"700"}],"headline-md":["24px",{lineHeight:"32px",letterSpacing:"-0.01em",fontWeight:"600"}],"body-sm":["12px",{lineHeight:"16px",fontWeight:"400"}],"body-md":["14px",{lineHeight:"20px",fontWeight:"400"}],"headline-sm":["18px",{lineHeight:"26px",letterSpacing:"-0.005em",fontWeight:"600"}],"label-sm":["11px",{lineHeight:"14px",letterSpacing:"0.04em",fontWeight:"700"}],"label-lg":["14px",{lineHeight:"20px",letterSpacing:"0.01em",fontWeight:"600"}],"label-md":["12px",{lineHeight:"16px",letterSpacing:"0.02em",fontWeight:"600"}],"headline-lg-mobile":["24px",{lineHeight:"32px",letterSpacing:"-0.015em",fontWeight:"700"}]}}}};</script></head><body class="bg-surface font-body-md text-body-md text-on-surface min-h-screen"><header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 w-full px-gutter-desktop flex items-center justify-between"><div class="flex items-center gap-space-md"><img alt="Hospital MedScheduler Emblem" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/ALJJyrAc_cOuP9x9lvaAC0SwjhK9TcaOiX9GoMUOEzJo8P--SUGlL_XB5x8CMVGaihkjzujkh3WK2Lbomv-7oKlO4tOFzzqQlgicFcvRqJ41_2PYcoHml0LeKGfnYMgmROVPw5qU9d4peIdl62z9s_noRR7LRqP6lW70wgnjgXpAQ2T_MG89SQ64hNET8Rkve5bOLpNCwGMLbtaJakUINY-rLGumkL0onUfnRudhLuWoodAs"/><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-on-surface">Hospital Appointment & Emergency Scheduler</span><span class="font-label-sm text-label-sm text-on-surface-variant">Terminal #4 • Trauma & Outpatient Center</span></div></div><div class="flex items-center gap-space-md"><button class="inline-flex items-center gap-space-xs px-space-md py-space-xs rounded-lg bg-surface-container-lowest text-on-surface hover:bg-surface-container hover:text-on-surface transition-colors font-label-md text-label-md" type="button"><span class="material-symbols-outlined text-[16px]">file_download</span>Export CSV</button><button class="inline-flex items-center gap-space-xs px-space-md py-space-xs rounded-lg bg-surface-container-lowest text-error hover:bg-error-container hover:text-on-error-container transition-colors font-label-md text-label-md" type="button"><span class="material-symbols-outlined text-[16px]">restart_alt</span>Reset All</button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><aside class="fixed left-0 top-16 bottom-8 w-64 bg-surface-container-lowest shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex flex-col justify-between py-space-lg"><div class="px-space-md"><div class="px-space-md mb-space-md font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Operational Modules</div><nav class="flex flex-col gap-space-xs" data-active-classes="bg-primary-container text-on-primary font-bold rounded-lg"><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-label-lg text-label-lg" data-path="live-queue" href="#"><span class="material-symbols-outlined text-[20px]">emergency</span>Live Triage & Queue</a><a aria-current="page" class="flex items-center gap-space-sm px-space-md py-space-sm transition-colors bg-primary-container text-on-primary font-bold rounded-lg" data-path="appointment-schedule" href="#"><span class="material-symbols-outlined text-[20px]">calendar_today</span>Appointment Schedule</a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-label-lg text-label-lg" data-path="patient-intake" href="#"><span class="material-symbols-outlined text-[20px]">person_add</span>Patient Intake</a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-label-lg text-label-lg" data-path="trauma-bay-allocation" href="#"><span class="material-symbols-outlined text-[20px]">local_hospital</span>Bay Allocation</a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-label-lg text-label-lg" data-path="terminal-logs" href="#"><span class="material-symbols-outlined text-[20px]">clinical_notes</span>Terminal Audit Log</a></nav></div><div class="px-space-md"><div class="bg-surface-container-low p-space-md rounded-lg flex flex-col gap-space-xs"><span class="font-label-sm text-label-sm text-on-surface-variant">Active Desk</span><span class="font-label-md text-label-md text-on-surface font-bold">Dr. Marcus Vance (Lead)</span><span class="font-body-sm text-body-sm text-on-surface-variant">Shift ID: #TR-8820</span></div></div></aside><div class="pl-64"><main class="relative pt-16 pb-8 bg-surface w-full min-h-screen px-gutter-desktop"><div class="flex flex-col w-full gap-space-lg pb-space-xl">
+<!-- Top Booking Control Panel -->
+<section class="bg-surface-container-lowest rounded-xl shadow-sm p-space-lg">
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-space-lg">
+<form class="flex-1 grid grid-cols-1 md:grid-cols-12 gap-space-md items-end" id="bookingForm">
+<!-- Patient Name Input -->
+<div class="md:col-span-5 flex flex-col gap-space-xs">
+<label class="font-label-md text-label-md text-on-surface-variant flex items-center justify-between" for="patientName">
+<span>Patient Identity / Full Name</span>
+<span class="font-label-sm text-label-sm text-primary">MRN Auto-Assign</span>
+</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[18px]">person_search</span>
+<input class="w-full bg-surface-container-lowest text-on-surface placeholder:text-outline pl-9 pr-space-md py-2.5 rounded-lg font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary shadow-sm" id="patientName" name="patientName" placeholder="Enter patient name (e.g. Eleanor Rigby)" required="" type="text"/>
+</div>
+</div>
+<!-- Triage / Type Select -->
+<div class="md:col-span-3 flex flex-col gap-space-xs">
+<label class="font-label-md text-label-md text-on-surface-variant" for="schedType">Intake Priority</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[18px]">emergency_heat</span>
+<select class="w-full bg-surface-container-lowest text-on-surface pl-9 pr-space-lg py-2.5 rounded-lg font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary appearance-none cursor-pointer shadow-sm" id="schedType" name="schedType">
+<option value="Routine">Routine (Outpatient)</option>
+<option value="Emergency">STAT Emergency (Trauma)</option>
+<option value="Walk-In">Walk-In (Awaiting Triage)</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-outline text-[18px]">expand_more</span>
+</div>
+</div>
+<!-- Action Buttons Group -->
+<div class="md:col-span-4 flex items-center gap-space-sm pt-1 md:pt-0">
+<button class="flex-1 bg-primary hover:bg-secondary text-on-primary font-label-lg text-label-lg px-4 py-2.5 rounded-lg shadow-sm flex items-center justify-center gap-space-xs transition-colors" id="bookBtn" type="submit">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+<span>Book Patient</span>
+</button>
+<button class="bg-surface-container-lowest hover:bg-surface-container text-on-surface-variant font-label-md text-label-md px-3.5 py-2.5 rounded-lg shadow-sm flex items-center justify-center transition-colors" id="cancelSelectedBtn" title="Deselect or clear appointments" type="button">
+<span class="material-symbols-outlined text-[18px]">cancel</span>
+</button>
+</div>
+</form>
+<!-- Thread Simulation Trigger -->
+<div class="flex items-center gap-space-sm lg:self-end">
+<button class="bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md px-4 py-2.5 rounded-lg shadow-sm flex items-center gap-space-xs transition-colors" id="runThreadDemoBtn" type="button">
+<span class="material-symbols-outlined text-primary text-[18px] animate-spin" style="animation-duration: 4s;">sync</span>
+<span>Run Thread Demo</span>
+</button>
+</div>
+</div>
+<!-- Live Telemetry / Pill Counters -->
+<div class="mt-space-lg pt-space-md flex flex-wrap items-center gap-space-sm">
+<div class="inline-flex items-center gap-space-xs px-3 py-1.5 rounded-full bg-surface-container-low text-on-surface">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Active Queued:</span>
+<span class="font-label-md text-label-md font-bold text-primary" id="activeQueuedCounter">14</span>
+</div>
+<div class="inline-flex items-center gap-space-xs px-3 py-1.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+<span class="font-label-sm text-label-sm uppercase">Trauma Bays:</span>
+<span class="font-label-md text-label-md font-bold text-tertiary">3 / 4 In Use</span>
+</div>
+<div class="inline-flex items-center gap-space-xs px-3 py-1.5 rounded-full bg-surface-container-low text-on-surface">
+<span class="material-symbols-outlined text-[14px] text-secondary">stethoscope</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">On-Call Staff:</span>
+<span class="font-label-md text-label-md text-on-surface">6 MDs Active</span>
+</div>
+<div class="inline-flex items-center gap-space-xs px-3 py-1.5 rounded-full bg-surface-container-low text-on-surface ml-auto">
+<span class="material-symbols-outlined text-[14px] text-outline">verified</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Locking Mechanism: Semaphore v4.1</span>
+</div>
+</div>
+</section>
+<!-- Emergency STAT Alert Banner -->
+<section class="w-full bg-tertiary text-on-tertiary rounded-xl shadow-md p-space-md flex flex-col md:flex-row items-center justify-between gap-space-md transition-all duration-300" id="emergencyAlertBanner">
+<div class="flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-lg bg-on-tertiary/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-tertiary text-[24px] animate-bounce">warning</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="bg-on-tertiary text-tertiary font-label-sm text-label-sm px-1.5 py-0.5 rounded font-bold uppercase tracking-wider">STAT Critical</span>
+<span class="font-headline-sm text-headline-sm leading-snug">EMERGENCY: Patient assigned to Dr. Rao (Bay 02 - Immediate Attention Required)</span>
+</div>
+<p class="font-body-sm text-body-sm text-tertiary-fixed opacity-95">Trauma code dispatched. Vit-card monitors sync ID #TR-9401. Anesthesiology paged.</p>
+</div>
+</div>
+<div class="flex items-center gap-space-sm shrink-0 self-end md:self-center">
+<button class="bg-on-tertiary text-tertiary hover:bg-surface-bright font-label-md text-label-md px-4 py-2 rounded-lg font-bold tracking-wide uppercase transition-colors shadow-sm" id="ackEmergencyBtn" type="button">
+        Acknowledge Alert
+      </button>
+</div>
+</section>
+<!-- Clinical Queue Interactive Table -->
+<section class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden flex flex-col">
+<!-- Quick Filter Control Tabs Bar -->
+<div class="px-space-lg py-space-md bg-surface-container-low flex flex-wrap items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-xs">
+<button class="filter-tab px-3 py-1.5 rounded-lg bg-primary text-on-primary font-label-md text-label-md shadow-sm transition-colors" data-filter="all" type="button">
+          All Entries (<span id="countAll">6</span>)
+        </button>
+<button class="filter-tab px-3 py-1.5 rounded-lg bg-surface-container-lowest text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-colors" data-filter="Emergency" type="button">
+          Emergencies (<span id="countEmergency">2</span>)
+        </button>
+<button class="filter-tab px-3 py-1.5 rounded-lg bg-surface-container-lowest text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-colors" data-filter="Waiting" type="button">
+          Waiting Queue (<span id="countWaiting">2</span>)
+        </button>
+<button class="filter-tab px-3 py-1.5 rounded-lg bg-surface-container-lowest text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-colors" data-filter="Routine" type="button">
+          Confirmed Routine (<span id="countRoutine">2</span>)
+        </button>
+</div>
+<div class="flex items-center gap-space-sm">
+<div class="relative">
+<input class="bg-surface-container-lowest text-on-surface placeholder:text-outline text-body-sm font-body-sm pl-8 pr-3 py-1.5 rounded-lg focus:outline-none focus:ring-1 focus:ring-primary shadow-sm" id="tableSearch" placeholder="Filter table rows..." type="text"/>
+<span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-outline text-[14px]">search</span>
+</div>
+</div>
+</div>
+<!-- Data Table Canvas -->
+<div class="w-full overflow-x-auto">
+<table class="w-full text-left border-collapse" id="schedulerTable">
+<thead>
+<tr class="bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider select-none">
+<th class="py-3 px-4 w-12 text-center">
+<input class="rounded accent-primary cursor-pointer w-4 h-4" id="selectAllCheckbox" type="checkbox"/>
+</th>
+<th class="py-3 px-4">
+<div class="flex items-center gap-1 cursor-pointer">
+<span>Record ID</span>
+<span class="material-symbols-outlined text-[14px]">swap_vert</span>
+</div>
+</th>
+<th class="py-3 px-4">Type</th>
+<th class="py-3 px-4">Patient Profile</th>
+<th class="py-3 px-4">Attending Physician</th>
+<th class="py-3 px-4">Scheduled Slot</th>
+<th class="py-3 px-4">Status / Bay Allocation</th>
+<th class="py-3 px-4 text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="font-body-md text-body-md" id="queueTableBody">
+<!-- Row 1: EMERGENCY (Light Red/Pink) -->
+<tr class="bg-error-container text-on-error-container hover:bg-tertiary-fixed transition-colors" data-status="Emergency" data-type="Emergency">
+<td class="py-3.5 px-4 text-center">
+<input class="row-checkbox rounded accent-tertiary cursor-pointer w-4 h-4" type="checkbox"/>
+</td>
+<td class="py-3.5 px-4 font-label-md text-label-md font-bold text-tertiary">#MED-9401</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-tertiary text-on-tertiary font-label-sm text-label-sm font-bold shadow-sm">
+<span class="material-symbols-outlined text-[13px] animate-pulse">crisis_alert</span>
+                EMERGENCY
+              </span>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg font-bold text-on-error-container">Sarah Jenkins</span>
+<span class="font-body-sm text-body-sm text-tertiary">Polytrauma • Critical</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-tertiary">local_hospital</span>
+<span class="font-label-md text-label-md font-semibold text-on-error-container">Dr. Anita Rao</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="font-label-md text-label-md font-bold text-tertiary">10:42 AM (Immediate)</span>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-tertiary-container text-on-tertiary-container font-label-sm text-label-sm font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-fixed-dim animate-ping"></span>
+                Bay 02 Allocated
+              </span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<button class="action-btn text-tertiary hover:text-on-error-container font-label-md text-label-md inline-flex items-center p-1 rounded hover:bg-on-tertiary/20" type="button">
+<span class="material-symbols-outlined text-[18px]">radiology</span>
+</button>
+</td>
+</tr>
+<!-- Row 2: Routine (Pure White) -->
+<tr class="bg-surface-container-lowest text-on-surface hover:bg-surface-container-low transition-colors" data-status="Confirmed" data-type="Routine">
+<td class="py-3.5 px-4 text-center">
+<input class="row-checkbox rounded accent-primary cursor-pointer w-4 h-4" type="checkbox"/>
+</td>
+<td class="py-3.5 px-4 font-label-md text-label-md font-semibold text-on-surface-variant">#MED-9402</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm font-semibold">
+                Routine
+              </span>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">Marcus Vance</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Post-Op Orthopedic Follow-up</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-outline">account_circle</span>
+<span class="font-label-md text-label-md text-on-surface">Dr. David Chen</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="font-body-md text-body-md text-on-surface">11:00 AM</span>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[13px]">check_circle</span>
+                Confirmed
+              </span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<button class="action-btn text-outline hover:text-on-surface font-label-md text-label-md inline-flex items-center p-1 rounded hover:bg-surface-container" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3: Waiting (Amber/Yellow) -->
+<tr class="bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors" data-status="Waiting" data-type="Routine">
+<td class="py-3.5 px-4 text-center">
+<input class="row-checkbox rounded accent-primary cursor-pointer w-4 h-4" type="checkbox"/>
+</td>
+<td class="py-3.5 px-4 font-label-md text-label-md font-semibold text-on-surface-variant">#MED-9403</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-surface-container-highest text-on-surface font-label-sm text-label-sm font-semibold">
+                Walk-In
+              </span>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">Elena Rostova</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Acute Migraine • Ambulatory</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="font-label-md text-label-md italic text-outline">Unassigned (Triage Deck)</span>
+</td>
+<td class="py-3.5 px-4">
+<span class="font-body-md text-body-md text-on-surface">11:15 AM</span>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-surface-container-highest text-on-surface font-label-sm text-label-sm font-bold">
+<span class="material-symbols-outlined text-[13px] animate-spin" style="animation-duration: 6s;">hourglass_empty</span>
+                Waiting - Triage Pending
+              </span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<button class="action-btn text-primary hover:text-secondary font-label-md text-label-md inline-flex items-center p-1 rounded hover:bg-surface-container-lowest" type="button">
+<span class="material-symbols-outlined text-[18px]">person_check</span>
+</button>
+</td>
+</tr>
+<!-- Row 4: EMERGENCY (Light Red/Pink) -->
+<tr class="bg-error-container text-on-error-container hover:bg-tertiary-fixed transition-colors" data-status="Emergency" data-type="Emergency">
+<td class="py-3.5 px-4 text-center">
+<input class="row-checkbox rounded accent-tertiary cursor-pointer w-4 h-4" type="checkbox"/>
+</td>
+<td class="py-3.5 px-4 font-label-md text-label-md font-bold text-tertiary">#MED-9404</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-tertiary text-on-tertiary font-label-sm text-label-sm font-bold shadow-sm">
+<span class="material-symbols-outlined text-[13px] animate-pulse">crisis_alert</span>
+                EMERGENCY
+              </span>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg font-bold text-on-error-container">Robert Kim</span>
+<span class="font-body-sm text-body-sm text-tertiary">Acute Myocardial Infarction</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-tertiary">local_hospital</span>
+<span class="font-label-md text-label-md font-semibold text-on-error-container">Dr. Anita Rao</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="font-label-md text-label-md font-bold text-tertiary">11:20 AM (STAT)</span>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-tertiary-container text-on-tertiary-container font-label-sm text-label-sm font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-fixed animate-ping"></span>
+                En Route - ER Prep
+              </span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<button class="action-btn text-tertiary hover:text-on-error-container font-label-md text-label-md inline-flex items-center p-1 rounded hover:bg-on-tertiary/20" type="button">
+<span class="material-symbols-outlined text-[18px]">vital_signs</span>
+</button>
+</td>
+</tr>
+<!-- Row 5: Routine (Pure White) -->
+<tr class="bg-surface-container-lowest text-on-surface hover:bg-surface-container-low transition-colors" data-status="Confirmed" data-type="Routine">
+<td class="py-3.5 px-4 text-center">
+<input class="row-checkbox rounded accent-primary cursor-pointer w-4 h-4" type="checkbox"/>
+</td>
+<td class="py-3.5 px-4 font-label-md text-label-md font-semibold text-on-surface-variant">#MED-9405</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm font-semibold">
+                Routine
+              </span>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">Clara Higgins</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Pediatric Immunology Review</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-outline">account_circle</span>
+<span class="font-label-md text-label-md text-on-surface">Dr. Patricia Patel</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="font-body-md text-body-md text-on-surface">11:30 AM</span>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[13px]">check_circle</span>
+                Confirmed
+              </span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<button class="action-btn text-outline hover:text-on-surface font-label-md text-label-md inline-flex items-center p-1 rounded hover:bg-surface-container" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 6: Waiting (Amber/Yellow) -->
+<tr class="bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors" data-status="Waiting" data-type="Routine">
+<td class="py-3.5 px-4 text-center">
+<input class="row-checkbox rounded accent-primary cursor-pointer w-4 h-4" type="checkbox"/>
+</td>
+<td class="py-3.5 px-4 font-label-md text-label-md font-semibold text-on-surface-variant">#MED-9406</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-surface-container-highest text-on-surface font-label-sm text-label-sm font-semibold">
+                Routine
+              </span>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">Liam Gallagher</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">General Laceration • Stable</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="font-label-md text-label-md italic text-outline">Waiting Queue (Desk 01)</span>
+</td>
+<td class="py-3.5 px-4">
+<span class="font-body-md text-body-md text-on-surface">11:45 AM</span>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-surface-container-highest text-on-surface font-label-sm text-label-sm font-bold">
+<span class="material-symbols-outlined text-[13px]">how_to_reg</span>
+                Waiting - Check-in Complete
+              </span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<button class="action-btn text-primary hover:text-secondary font-label-md text-label-md inline-flex items-center p-1 rounded hover:bg-surface-container-lowest" type="button">
+<span class="material-symbols-outlined text-[18px]">assignment_turned_in</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Empty state element for search filter -->
+<div class="hidden p-space-xl flex-col items-center justify-center text-center" id="emptyTableMessage">
+<span class="material-symbols-outlined text-outline text-[40px] mb-2">find_in_page</span>
+<p class="font-headline-sm text-headline-sm text-on-surface">No records matching clinical query</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Adjust your text search or toggle back to All Entries.</p>
+</div>
+</section>
+<!-- Bottom Diagnostics & Telemetry Bar -->
+<section class="bg-surface-container-lowest rounded-xl shadow-sm px-space-lg py-space-md flex flex-col md:flex-row items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-md">
+<span class="flex items-center gap-2 font-label-md text-label-md text-on-surface">
+<span class="relative flex h-2.5 w-2.5">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary-container opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary"></span>
+</span>
+<span class="font-bold">Ready</span>
+<span class="text-outline">•</span>
+<span>Terminal #04 Active</span>
+<span class="text-outline">•</span>
+<span class="text-primary font-semibold">All Services Operational</span>
+</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant font-mono" id="liveTimestamp">10:48:12 UTC</span>
+</div>
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-space-xs text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[15px]">lan</span>
+<span>HL7 / FHIR Gateway: 200 OK</span>
+</div>
+<button class="bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md px-3 py-1.5 rounded-lg flex items-center gap-1 transition-colors" id="batchSyncBtn" type="button">
+<span class="material-symbols-outlined text-[15px]">sync_alt</span>
+        Sync Roster
+      </button>
+</div>
+</section>
+</div>
+<script>
+  (function initScheduler() {
+    // Clock updater
+    function updateClock() {
+      const now = new Date();
+      const tsElem = document.getElementById('liveTimestamp');
+      if (tsElem) {
+        tsElem.textContent = now.toLocaleTimeString() + ' (Local)';
+      }
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // DOM Elements
+    const bookingForm = document.getElementById('bookingForm');
+    const tableBody = document.getElementById('queueTableBody');
+    const selectAllCheckbox = document.getElementById('selectAllCheckbox');
+    const cancelSelectedBtn = document.getElementById('cancelSelectedBtn');
+    const runThreadDemoBtn = document.getElementById('runThreadDemoBtn');
+    const ackEmergencyBtn = document.getElementById('ackEmergencyBtn');
+    const emergencyAlertBanner = document.getElementById('emergencyAlertBanner');
+    const filterTabs = document.querySelectorAll('.filter-tab');
+    const tableSearch = document.getElementById('tableSearch');
+    const emptyMsg = document.getElementById('emptyTableMessage');
+
+    // Counts update helper
+    function updateCounts() {
+      const rows = Array.from(tableBody.querySelectorAll('tr'));
+      const total = rows.length;
+      const em = rows.filter(r => r.getAttribute('data-type') === 'Emergency').length;
+      const wt = rows.filter(r => r.getAttribute('data-status') === 'Waiting').length;
+      const rt = rows.filter(r => r.getAttribute('data-status') === 'Confirmed').length;
+
+      document.getElementById('countAll').textContent = total;
+      document.getElementById('countEmergency').textContent = em;
+      document.getElementById('countWaiting').textContent = wt;
+      document.getElementById('countRoutine').textContent = rt;
+      
+      const queuedCounter = document.getElementById('activeQueuedCounter');
+      if (queuedCounter) {
+        queuedCounter.textContent = total + 8; // baseline operational queue
+      }
+    }
+
+    // Acknowledge Emergency Banner
+    if (ackEmergencyBtn && emergencyAlertBanner) {
+      ackEmergencyBtn.addEventListener('click', () => {
+        emergencyAlertBanner.classList.add('opacity-0', 'scale-98');
+        setTimeout(() => {
+          emergencyAlertBanner.classList.add('hidden');
+        }, 300);
+      });
+    }
+
+    // Select All Checkbox
+    if (selectAllCheckbox) {
+      selectAllCheckbox.addEventListener('change', (e) => {
+        const checkboxes = tableBody.querySelectorAll('.row-checkbox');
+        checkboxes.forEach(cb => {
+          cb.checked = e.target.checked;
+        });
+      });
+    }
+
+    // Cancel Selected Rows
+    if (cancelSelectedBtn) {
+      cancelSelectedBtn.addEventListener('click', () => {
+        const checkedRows = Array.from(tableBody.querySelectorAll('.row-checkbox:checked'));
+        if (checkedRows.length === 0) {
+          alert('No appointments selected for cancellation.');
+          return;
+        }
+        if (confirm(`Remove ${checkedRows.length} selected patient appointment(s)?`)) {
+          checkedRows.forEach(cb => {
+            const tr = cb.closest('tr');
+            if (tr) tr.remove();
+          });
+          selectAllCheckbox.checked = false;
+          updateCounts();
+        }
+      });
+    }
+
+    // Booking Form Submission
+    if (bookingForm) {
+      bookingForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const nameInput = document.getElementById('patientName');
+        const typeInput = document.getElementById('schedType');
+        
+        const patientName = nameInput.value.trim();
+        const schedType = typeInput.value;
+        if (!patientName) return;
+
+        const newIdNum = Math.floor(1000 + Math.random() * 9000);
+        const recordId = `#MED-${newIdNum}`;
+        const nowTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+        const tr = document.createElement('tr');
+        
+        if (schedType === 'Emergency') {
+          tr.setAttribute('data-type', 'Emergency');
+          tr.setAttribute('data-status', 'Emergency');
+          tr.className = 'bg-error-container text-on-error-container hover:bg-tertiary-fixed transition-colors';
+          tr.innerHTML = `
+            <td class="py-3.5 px-4 text-center">
+              <input type="checkbox" class="row-checkbox rounded accent-tertiary cursor-pointer w-4 h-4" />
+            </td>
+            <td class="py-3.5 px-4 font-label-md text-label-md font-bold text-tertiary">${recordId}</td>
+            <td class="py-3.5 px-4">
+              <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-tertiary text-on-tertiary font-label-sm text-label-sm font-bold shadow-sm">
+                <span class="material-symbols-outlined text-[13px] animate-pulse">crisis_alert</span>
+                EMERGENCY
+              </span>
+            </td>
+            <td class="py-3.5 px-4">
+              <div class="flex flex-col">
+                <span class="font-label-lg text-label-lg font-bold text-on-error-container">${patientName}</span>
+                <span class="font-body-sm text-body-sm text-tertiary">Direct Trauma Triage</span>
+              </div>
+            </td>
+            <td class="py-3.5 px-4">
+              <div class="flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-[16px] text-tertiary">local_hospital</span>
+                <span class="font-label-md text-label-md font-semibold text-on-error-container">Dr. Anita Rao</span>
+              </div>
+            </td>
+            <td class="py-3.5 px-4">
+              <span class="font-label-md text-label-md font-bold text-tertiary">${nowTime} (STAT)</span>
+            </td>
+            <td class="py-3.5 px-4">
+              <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-tertiary-container text-on-tertiary-container font-label-sm text-label-sm font-bold">
+                <span class="w-1.5 h-1.5 rounded-full bg-tertiary-fixed-dim animate-ping"></span>
+                Bay 04 Priority Assigned
+              </span>
+            </td>
+            <td class="py-3.5 px-4 text-right">
+              <button type="button" class="action-btn text-tertiary hover:text-on-error-container font-label-md text-label-md inline-flex items-center p-1 rounded hover:bg-on-tertiary/20">
+                <span class="material-symbols-outlined text-[18px]">radiology</span>
+              </button>
+            </td>
+          `;
+          // Reveal emergency banner again if closed
+          if (emergencyAlertBanner) {
+            emergencyAlertBanner.classList.remove('hidden', 'opacity-0', 'scale-98');
+          }
+        } else if (schedType === 'Walk-In') {
+          tr.setAttribute('data-type', 'Routine');
+          tr.setAttribute('data-status', 'Waiting');
+          tr.className = 'bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors';
+          tr.innerHTML = `
+            <td class="py-3.5 px-4 text-center">
+              <input type="checkbox" class="row-checkbox rounded accent-primary cursor-pointer w-4 h-4" />
+            </td>
+            <td class="py-3.5 px-4 font-label-md text-label-md font-semibold text-on-surface-variant">${recordId}</td>
+            <td class="py-3.5 px-4">
+              <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-surface-container-highest text-on-surface font-label-sm text-label-sm font-semibold">
+                Walk-In
+              </span>
+            </td>
+            <td class="py-3.5 px-4">
+              <div class="flex flex-col">
+                <span class="font-label-lg text-label-lg font-semibold text-on-surface">${patientName}</span>
+                <span class="font-body-sm text-body-sm text-on-surface-variant">Awaiting Nurse Review</span>
+              </div>
+            </td>
+            <td class="py-3.5 px-4">
+              <span class="font-label-md text-label-md italic text-outline">Unassigned</span>
+            </td>
+            <td class="py-3.5 px-4">
+              <span class="font-body-md text-body-md text-on-surface">${nowTime}</span>
+            </td>
+            <td class="py-3.5 px-4">
+              <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-surface-container-highest text-on-surface font-label-sm text-label-sm font-bold">
+                <span class="material-symbols-outlined text-[13px] animate-spin" style="animation-duration: 6s;">hourglass_empty</span>
+                Waiting - Triage Pending
+              </span>
+            </td>
+            <td class="py-3.5 px-4 text-right">
+              <button type="button" class="action-btn text-primary hover:text-secondary font-label-md text-label-md inline-flex items-center p-1 rounded hover:bg-surface-container-lowest">
+                <span class="material-symbols-outlined text-[18px]">person_check</span>
+              </button>
+            </td>
+          `;
+        } else {
+          tr.setAttribute('data-type', 'Routine');
+          tr.setAttribute('data-status', 'Confirmed');
+          tr.className = 'bg-surface-container-lowest text-on-surface hover:bg-surface-container-low transition-colors';
+          tr.innerHTML = `
+            <td class="py-3.5 px-4 text-center">
+              <input type="checkbox" class="row-checkbox rounded accent-primary cursor-pointer w-4 h-4" />
+            </td>
+            <td class="py-3.5 px-4 font-label-md text-label-md font-semibold text-on-surface-variant">${recordId}</td>
+            <td class="py-3.5 px-4">
+              <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm font-semibold">
+                Routine
+              </span>
+            </td>
+            <td class="py-3.5 px-4">
+              <div class="flex flex-col">
+                <span class="font-label-lg text-label-lg font-semibold text-on-surface">${patientName}</span>
+                <span class="font-body-sm text-body-sm text-on-surface-variant">Scheduled Outpatient</span>
+              </div>
+            </td>
+            <td class="py-3.5 px-4">
+              <div class="flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-[16px] text-outline">account_circle</span>
+                <span class="font-label-md text-label-md text-on-surface">Dr. David Chen</span>
+              </div>
+            </td>
+            <td class="py-3.5 px-4">
+              <span class="font-body-md text-body-md text-on-surface">${nowTime}</span>
+            </td>
+            <td class="py-3.5 px-4">
+              <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-semibold">
+                <span class="material-symbols-outlined text-[13px]">check_circle</span>
+                Confirmed
+              </span>
+            </td>
+            <td class="py-3.5 px-4 text-right">
+              <button type="button" class="action-btn text-outline hover:text-on-surface font-label-md text-label-md inline-flex items-center p-1 rounded hover:bg-surface-container">
+                <span class="material-symbols-outlined text-[18px]">more_vert</span>
+              </button>
+            </td>
+          `;
+        }
+
+        tableBody.prepend(tr);
+        nameInput.value = '';
+        updateCounts();
+      });
+    }
+
+    // Thread Simulation Demo Button
+    if (runThreadDemoBtn) {
+      runThreadDemoBtn.addEventListener('click', () => {
+        runThreadDemoBtn.disabled = true;
+        const origText = runThreadDemoBtn.innerHTML;
+        runThreadDemoBtn.innerHTML = `
+          <span class="material-symbols-outlined text-primary text-[18px] animate-spin">sync</span>
+          <span>Simulating Concurrency...</span>
+        `;
+
+        setTimeout(() => {
+          // Add 2 concurrent bookings dynamically
+          const emergencyRow = document.createElement('tr');
+          emergencyRow.setAttribute('data-type', 'Emergency');
+          emergencyRow.setAttribute('data-status', 'Emergency');
+          emergencyRow.className = 'bg-error-container text-on-error-container hover:bg-tertiary-fixed transition-colors';
+          emergencyRow.innerHTML = `
+            <td class="py-3.5 px-4 text-center">
+              <input type="checkbox" class="row-checkbox rounded accent-tertiary cursor-pointer w-4 h-4" />
+            </td>
+            <td class="py-3.5 px-4 font-label-md text-label-md font-bold text-tertiary">#MED-9407</td>
+            <td class="py-3.5 px-4">
+              <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-tertiary text-on-tertiary font-label-sm text-label-sm font-bold shadow-sm">
+                <span class="material-symbols-outlined text-[13px] animate-pulse">crisis_alert</span>
+                EMERGENCY
+              </span>
+            </td>
+            <td class="py-3.5 px-4">
+              <div class="flex flex-col">
+                <span class="font-label-lg text-label-lg font-bold text-on-error-container">Gabriel Santos</span>
+                <span class="font-body-sm text-body-sm text-tertiary">Thread Spawn: Worker #02 • Stat Trauma</span>
+              </div>
+            </td>
+            <td class="py-3.5 px-4">
+              <div class="flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-[16px] text-tertiary">local_hospital</span>
+                <span class="font-label-md text-label-md font-semibold text-on-error-container">Dr. Anita Rao</span>
+              </div>
+            </td>
+            <td class="py-3.5 px-4">
+              <span class="font-label-md text-label-md font-bold text-tertiary">11:50 AM (STAT)</span>
+            </td>
+            <td class="py-3.5 px-4">
+              <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-tertiary-container text-on-tertiary-container font-label-sm text-label-sm font-bold">
+                <span class="w-1.5 h-1.5 rounded-full bg-tertiary-fixed animate-ping"></span>
+                Bay 03 Allocated
+              </span>
+            </td>
+            <td class="py-3.5 px-4 text-right">
+              <button type="button" class="action-btn text-tertiary hover:text-on-error-container font-label-md text-label-md inline-flex items-center p-1 rounded hover:bg-on-tertiary/20">
+                <span class="material-symbols-outlined text-[18px]">radiology</span>
+              </button>
+            </td>
+          `;
+
+          const waitingRow = document.createElement('tr');
+          waitingRow.setAttribute('data-type', 'Routine');
+          waitingRow.setAttribute('data-status', 'Waiting');
+          waitingRow.className = 'bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors';
+          waitingRow.innerHTML = `
+            <td class="py-3.5 px-4 text-center">
+              <input type="checkbox" class="row-checkbox rounded accent-primary cursor-pointer w-4 h-4" />
+            </td>
+            <td class="py-3.5 px-4 font-label-md text-label-md font-semibold text-on-surface-variant">#MED-9408</td>
+            <td class="py-3.5 px-4">
+              <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-surface-container-highest text-on-surface font-label-sm text-label-sm font-semibold">
+                Routine
+              </span>
+            </td>
+            <td class="py-3.5 px-4">
+              <div class="flex flex-col">
+                <span class="font-label-lg text-label-lg font-semibold text-on-surface">Maya Lin</span>
+                <span class="font-body-sm text-body-sm text-on-surface-variant">Thread Spawn: Worker #01</span>
+              </div>
+            </td>
+            <td class="py-3.5 px-4">
+              <span class="font-label-md text-label-md italic text-outline">Queue Pool</span>
+            </td>
+            <td class="py-3.5 px-4">
+              <span class="font-body-md text-body-md text-on-surface">11:55 AM</span>
+            </td>
+            <td class="py-3.5 px-4">
+              <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-surface-container-highest text-on-surface font-label-sm text-label-sm font-bold">
+                <span class="material-symbols-outlined text-[13px]">hourglass_top</span>
+                Waiting - Queued
+              </span>
+            </td>
+            <td class="py-3.5 px-4 text-right">
+              <button type="button" class="action-btn text-primary hover:text-secondary font-label-md text-label-md inline-flex items-center p-1 rounded hover:bg-surface-container-lowest">
+                <span class="material-symbols-outlined text-[18px]">person_check</span>
+              </button>
+            </td>
+          `;
+
+          tableBody.prepend(waitingRow);
+          tableBody.prepend(emergencyRow);
+          updateCounts();
+
+          runThreadDemoBtn.disabled = false;
+          runThreadDemoBtn.innerHTML = origText;
+        }, 1200);
+      });
+    }
+
+    // Filter Tabs
+    filterTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        filterTabs.forEach(t => {
+          t.className = 'filter-tab px-3 py-1.5 rounded-lg bg-surface-container-lowest text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-colors';
+        });
+        tab.className = 'filter-tab px-3 py-1.5 rounded-lg bg-primary text-on-primary font-label-md text-label-md shadow-sm transition-colors';
+
+        const filterVal = tab.getAttribute('data-filter');
+        const rows = tableBody.querySelectorAll('tr');
+        let visibleCount = 0;
+
+        rows.forEach(r => {
+          const rType = r.getAttribute('data-type');
+          const rStatus = r.getAttribute('data-status');
+
+          if (filterVal === 'all') {
+            r.classList.remove('hidden');
+            visibleCount++;
+          } else if (filterVal === 'Emergency' && rType === 'Emergency') {
+            r.classList.remove('hidden');
+            visibleCount++;
+          } else if (filterVal === 'Waiting' && rStatus === 'Waiting') {
+            r.classList.remove('hidden');
+            visibleCount++;
+          } else if (filterVal === 'Routine' && rStatus === 'Confirmed') {
+            r.classList.remove('hidden');
+            visibleCount++;
+          } else {
+            r.classList.add('hidden');
+          }
+        });
+
+        if (emptyMsg) {
+          if (visibleCount === 0) {
+            emptyMsg.classList.remove('hidden');
+            emptyMsg.classList.add('flex');
+          } else {
+            emptyMsg.classList.add('hidden');
+            emptyMsg.classList.remove('flex');
+          }
+        }
+      });
+    });
+
+    // Real-time table text search
+    if (tableSearch) {
+      tableSearch.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase().trim();
+        const rows = tableBody.querySelectorAll('tr');
+        let matches = 0;
+
+        rows.forEach(r => {
+          const text = r.textContent.toLowerCase();
+          if (text.includes(query)) {
+            r.classList.remove('hidden');
+            matches++;
+          } else {
+            r.classList.add('hidden');
+          }
+        });
+
+        if (emptyMsg) {
+          if (matches === 0) {
+            emptyMsg.classList.remove('hidden');
+            emptyMsg.classList.add('flex');
+          } else {
+            emptyMsg.classList.add('hidden');
+            emptyMsg.classList.remove('flex');
+          }
+        }
+      });
+    }
+
+    // Initial count evaluation
+    updateCounts();
+  })();
+</script></main></div><footer class="fixed bottom-0 left-0 right-0 h-8 bg-surface-container-lowest shadow-[0_-1px_6px_rgba(0,0,0,0.04)] z-50 flex items-center justify-between px-gutter-desktop"><div class="flex items-center gap-space-sm"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary-container opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-secondary"></span></span><span class="font-body-sm text-body-sm text-on-surface-variant">System Status: Ready • Socket connected • Sync 12ms ago</span></div><div class="flex items-center gap-space-md"><span class="font-label-sm text-label-sm text-on-surface-variant">MedScheduler OS v2.4.1</span></div></footer></body></html>

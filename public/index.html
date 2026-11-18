@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="web_dashboard" name="shell-type"/>
+  <title>Clinical Emergency Scheduler • Trauma & Outpatient Center</title>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+  <style>
+    @layer base {
+      html, body { margin: 0; padding: 0; }
+      body { overscroll-behavior: none; }
+      main > :first-child { margin-top: 0 !important; }
+      main > :last-child { margin-bottom: 0 !important; }
+    }
+    ::-webkit-scrollbar { display: none; }
+    .toast-anim {
+      animation: slideIn 0.3s ease forwards;
+    }
+    @keyframes slideIn {
+      from { transform: translateY(-20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+  </style>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-error-container": "#93000a",
+            "surface-bright": "#f8f9ff",
+            "inverse-primary": "#b4c5ff",
+            "background": "#f8f9ff",
+            "surface-container-highest": "#d3e4fe",
+            "tertiary-fixed-dim": "#ffb4ab",
+            "tertiary-fixed": "#ffdad6",
+            "inverse-surface": "#213145",
+            "tertiary": "#ae0010",
+            "on-tertiary-fixed": "#410002",
+            "on-background": "#0b1c30",
+            "error": "#ba1a1a",
+            "surface-tint": "#0053db",
+            "secondary-container": "#4069f2",
+            "surface": "#f8f9ff",
+            "primary-fixed-dim": "#b4c5ff",
+            "on-surface-variant": "#434655",
+            "on-tertiary-fixed-variant": "#93000b",
+            "surface-dim": "#cbdbf5",
+            "secondary-fixed": "#dce1ff",
+            "outline-variant": "#c3c6d7",
+            "on-secondary-fixed-variant": "#0039b5",
+            "on-secondary": "#ffffff",
+            "secondary-fixed-dim": "#b7c4ff",
+            "primary-container": "#2563eb",
+            "surface-container": "#e5eeff",
+            "on-primary": "#ffffff",
+            "tertiary-container": "#d52022",
+            "surface-container-low": "#eff4ff",
+            "on-secondary-container": "#fffbff",
+            "on-tertiary-container": "#ffecea",
+            "on-error": "#ffffff",
+            "on-primary-fixed": "#00174b",
+            "secondary": "#1d4ed8",
+            "surface-container-lowest": "#ffffff",
+            "surface-container-high": "#dce9ff",
+            "on-secondary-fixed": "#001551",
+            "on-primary-fixed-variant": "#003ea8",
+            "error-container": "#ffdad6",
+            "on-primary-container": "#eeefff",
+            "primary-fixed": "#dbe1ff",
+            "surface-variant": "#d3e4fe",
+            "on-tertiary": "#ffffff",
+            "on-surface": "#0b1c30",
+            "inverse-on-surface": "#eaf1ff",
+            "outline": "#737686",
+            "primary": "#004ac6"
+          },
+          borderRadius: {
+            DEFAULT: "0.125rem",
+            lg: "0.25rem",
+            xl: "0.5rem",
+            full: "0.75rem"
+          },
+          spacing: {
+            margin: "1rem",
+            "space-sm": "0.5rem",
+            gutter: "1rem",
+            "space-md": "0.75rem",
+            "space-xs": "0.25rem",
+            "margin-desktop": "2rem",
+            "space-xl": "2rem",
+            "space-lg": "1.25rem",
+            "gutter-desktop": "1.5rem"
+          },
+          fontFamily: {
+            "body-lg": ["Inter"],
+            "headline-lg": ["Inter"],
+            "headline-md": ["Inter"],
+            "body-sm": ["Inter"],
+            "body-md": ["Inter"],
+            "headline-sm": ["Inter"],
+            "label-sm": ["Inter"],
+            "label-lg": ["Inter"],
+            "label-md": ["Inter"],
+            "headline-lg-mobile": ["Inter"]
+          },
+          fontSize: {
+            "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+            "headline-lg": ["32px", { lineHeight: "40px", letterSpacing: "-0.02em", fontWeight: "700" }],
+            "headline-md": ["24px", { lineHeight: "32px", letterSpacing: "-0.01em", fontWeight: "600" }],
+            "body-sm": ["12px", { lineHeight: "16px", fontWeight: "400" }],
+            "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+            "headline-sm": ["18px", { lineHeight: "26px", letterSpacing: "-0.005em", fontWeight: "600" }],
+            "label-sm": ["11px", { lineHeight: "14px", letterSpacing: "0.04em", fontWeight: "700" }],
+            "label-lg": ["14px", { lineHeight: "20px", letterSpacing: "0.01em", fontWeight: "600" }],
+            "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.02em", fontWeight: "600" }],
+            "headline-lg-mobile": ["24px", { lineHeight: "32px", letterSpacing: "-0.015em", fontWeight: "700" }]
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-surface font-body-md text-body-md text-on-surface min-h-screen">
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="fixed top-20 right-8 z-50 flex flex-col gap-2 max-w-md pointer-events-none"></div>
+
+  <!-- Top Header Bar -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
+    <div class="h-16 w-full px-gutter-desktop flex items-center justify-between">
+      <div class="flex items-center gap-space-md">
+        <div class="w-10 h-10 rounded-lg bg-primary-container text-on-primary flex items-center justify-center font-bold shadow-sm">
+          <span class="material-symbols-outlined text-[24px]">local_hospital</span>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-headline-sm text-headline-sm text-on-surface">Hospital Appointment & Emergency Scheduler</span>
+          <span class="font-label-sm text-label-sm text-on-surface-variant">Trauma & Outpatient Center • Drs. Rao & Mehta</span>
+        </div>
+      </div>
+      <div class="flex items-center gap-space-md">
+        <button id="exportCsvBtn" class="inline-flex items-center gap-space-xs px-space-md py-space-xs rounded-lg bg-surface-container-lowest border border-outline-variant text-on-surface hover:bg-surface-container hover:text-on-surface transition-colors font-label-md text-label-md shadow-sm" type="button">
+          <span class="material-symbols-outlined text-[16px]">file_download</span>Export CSV
+        </button>
+        <button id="resetAllBtn" class="inline-flex items-center gap-space-xs px-space-md py-space-xs rounded-lg bg-surface-container-lowest border border-error/30 text-error hover:bg-error-container hover:text-on-error-container transition-colors font-label-md text-label-md shadow-sm" type="button">
+          <span class="material-symbols-outlined text-[16px]">restart_alt</span>Reset All
+        </button>
+        <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
+          <span class="material-symbols-outlined text-on-primary text-[18px]">person</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Side Navigation Rail -->
+  <aside class="fixed left-0 top-16 bottom-8 w-64 bg-surface-container-lowest shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex flex-col justify-between py-space-lg">
+    <div class="px-space-md">
+      <div class="px-space-md mb-space-md font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Operational Modules</div>
+      <nav class="flex flex-col gap-space-xs">
+        <a aria-current="page" class="flex items-center gap-space-sm px-space-md py-space-sm transition-colors bg-primary-container text-on-primary font-bold rounded-lg" href="#">
+          <span class="material-symbols-outlined text-[20px]">calendar_today</span>Live Schedule & Queue
+        </a>
+        <a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-label-lg text-label-lg" href="#bookingSection">
+          <span class="material-symbols-outlined text-[20px]">person_add</span>Patient Intake
+        </a>
+        <a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-label-lg text-label-lg" href="#schedulerSection">
+          <span class="material-symbols-outlined text-[20px]">emergency</span>Triage Monitor
+        </a>
+      </nav>
+    </div>
+    <div class="px-space-md">
+      <div class="bg-surface-container-low p-space-md rounded-lg flex flex-col gap-space-xs">
+        <span class="font-label-sm text-label-sm text-on-surface-variant">Active Clinical Faculty</span>
+        <span class="font-label-md text-label-md text-on-surface font-bold">Dr. Rao & Dr. Mehta</span>
+        <span class="font-body-sm text-body-sm text-on-surface-variant">Operating Slots: 9:00 AM – 12:00 PM</span>
+        <div class="mt-2 pt-2 border-t border-outline-variant/30 text-[11px] text-outline">
+          Priority Engine: STAT (1) > Routine (4)
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content View -->
+  <div class="pl-64">
+    <main class="relative pt-16 pb-8 bg-surface w-full min-h-screen px-gutter-desktop">
+      <div class="flex flex-col w-full gap-space-lg pb-space-xl">
+
+        <!-- Top Booking Control Panel -->
+        <section id="bookingSection" class="bg-surface-container-lowest rounded-xl shadow-sm p-space-lg mt-4 border border-outline-variant/30">
+          <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-space-lg">
+            <form class="flex-1 grid grid-cols-1 md:grid-cols-12 gap-space-md items-end" id="bookingForm">
+              <!-- Patient Name Input -->
+              <div class="md:col-span-5 flex flex-col gap-space-xs">
+                <label class="font-label-md text-label-md text-on-surface-variant flex items-center justify-between" for="patientName">
+                  <span>Patient Identity / Full Name</span>
+                  <span class="font-label-sm text-label-sm text-primary">Live DB Record</span>
+                </label>
+                <div class="relative">
+                  <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[18px]">person_search</span>
+                  <input class="w-full bg-surface-container-lowest text-on-surface placeholder:text-outline pl-9 pr-space-md py-2.5 rounded-lg font-body-md text-body-md border border-outline-variant focus:outline-none focus:ring-2 focus:ring-primary shadow-sm" id="patientName" name="patientName" placeholder="Enter patient name (e.g. Eleanor Rigby)" required type="text"/>
+                </div>
+              </div>
+              <!-- Triage / Type Select -->
+              <div class="md:col-span-3 flex flex-col gap-space-xs">
+                <label class="font-label-md text-label-md text-on-surface-variant" for="schedType">Intake Priority</label>
+                <div class="relative">
+                  <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[18px]">emergency_heat</span>
+                  <select class="w-full bg-surface-container-lowest text-on-surface pl-9 pr-space-lg py-2.5 rounded-lg font-body-md text-body-md border border-outline-variant focus:outline-none focus:ring-2 focus:ring-primary appearance-none cursor-pointer shadow-sm" id="schedType" name="schedType">
+                    <option value="Routine">Routine (Priority 4)</option>
+                    <option value="Emergency">STAT Emergency (Priority 1)</option>
+                  </select>
+                  <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-outline text-[18px]">expand_more</span>
+                </div>
+              </div>
+              <!-- Action Buttons Group -->
+              <div class="md:col-span-4 flex items-center gap-space-sm pt-1 md:pt-0">
+                <button class="flex-1 bg-primary hover:bg-secondary text-on-primary font-label-lg text-label-lg px-4 py-2.5 rounded-lg shadow-sm flex items-center justify-center gap-space-xs transition-colors" id="bookBtn" type="submit">
+                  <span class="material-symbols-outlined text-[18px]">add_circle</span>
+                  <span>Book Patient</span>
+                </button>
+                <button class="bg-surface-container-lowest hover:bg-surface-container text-on-surface-variant border border-outline-variant font-label-md text-label-md px-3.5 py-2.5 rounded-lg shadow-sm flex items-center justify-center transition-colors" id="cancelSelectedBtn" title="Deselect or clear appointments" type="button">
+                  <span class="material-symbols-outlined text-[18px]">delete_sweep</span>
+                </button>
+              </div>
+            </form>
+
+            <!-- Thread Simulation Trigger -->
+            <div class="flex items-center gap-space-sm lg:self-end">
+              <button class="bg-surface-container hover:bg-surface-container-high text-on-surface border border-outline-variant font-label-md text-label-md px-4 py-2.5 rounded-lg shadow-sm flex items-center gap-space-xs transition-colors" id="runThreadDemoBtn" type="button">
+                <span class="material-symbols-outlined text-primary text-[18px]">sync</span>
+                <span>Run 10-Thread Demo</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Live Telemetry / Pill Counters -->
+          <div class="mt-space-lg pt-space-md flex flex-wrap items-center gap-space-sm border-t border-outline-variant/30">
+            <div class="inline-flex items-center gap-space-xs px-3 py-1.5 rounded-full bg-surface-container-low text-on-surface">
+              <span class="w-2 h-2 rounded-full bg-primary"></span>
+              <span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Waitlist Queue:</span>
+              <span class="font-label-md text-label-md font-bold text-primary" id="activeQueuedCounter">0</span>
+            </div>
+            <div class="inline-flex items-center gap-space-xs px-3 py-1.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed">
+              <span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+              <span class="font-label-sm text-label-sm uppercase">Doctor Slots:</span>
+              <span class="font-label-md text-label-md font-bold text-tertiary" id="traumaBaysCounter">0 / 8 Booked</span>
+            </div>
+            <div class="inline-flex items-center gap-space-xs px-3 py-1.5 rounded-full bg-surface-container-low text-on-surface">
+              <span class="material-symbols-outlined text-[14px] text-secondary">stethoscope</span>
+              <span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Physicians:</span>
+              <span class="font-label-md text-label-md text-on-surface">Dr. Rao & Dr. Mehta</span>
+            </div>
+            <div class="inline-flex items-center gap-space-xs px-3 py-1.5 rounded-full bg-surface-container-low text-on-surface ml-auto">
+              <span class="material-symbols-outlined text-[14px] text-outline">verified_user</span>
+              <span class="font-label-sm text-label-sm text-on-surface-variant">DB Constraint: UNIQUE(doctor, slot)</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Emergency STAT Alert Banner -->
+        <section class="hidden w-full bg-tertiary text-on-tertiary rounded-xl shadow-md p-space-md flex-col md:flex-row items-center justify-between gap-space-md transition-all duration-300" id="emergencyAlertBanner">
+          <div class="flex items-center gap-space-md">
+            <div class="w-10 h-10 rounded-lg bg-on-tertiary/10 flex items-center justify-center shrink-0">
+              <span class="material-symbols-outlined text-on-tertiary text-[24px] animate-bounce">warning</span>
+            </div>
+            <div class="flex flex-col">
+              <div class="flex items-center gap-space-xs">
+                <span class="bg-on-tertiary text-tertiary font-label-sm text-label-sm px-1.5 py-0.5 rounded font-bold uppercase tracking-wider">STAT Critical</span>
+                <span class="font-headline-sm text-headline-sm leading-snug" id="emergencyAlertText">EMERGENCY: Patient assigned to slot</span>
+              </div>
+              <p class="font-body-sm text-body-sm text-tertiary-fixed opacity-95" id="emergencyAlertSubtext">Trauma code dispatched. Immediate clinical attention required.</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-space-sm shrink-0 self-end md:self-center">
+            <button class="bg-on-tertiary text-tertiary hover:bg-surface-bright font-label-md text-label-md px-4 py-2 rounded-lg font-bold tracking-wide uppercase transition-colors shadow-sm" id="ackEmergencyBtn" type="button">
+              Acknowledge Alert
+            </button>
+          </div>
+        </section>
+
+        <!-- Clinical Queue Interactive Table -->
+        <section id="schedulerSection" class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden flex flex-col border border-outline-variant/30">
+          <!-- Quick Filter Control Tabs Bar -->
+          <div class="px-space-lg py-space-md bg-surface-container-low flex flex-wrap items-center justify-between gap-space-md">
+            <div class="flex items-center gap-space-xs">
+              <button class="filter-tab px-3 py-1.5 rounded-lg bg-primary text-on-primary font-label-md text-label-md shadow-sm transition-colors" data-filter="all" type="button">
+                All Entries (<span id="countAll">0</span>)
+              </button>
+              <button class="filter-tab px-3 py-1.5 rounded-lg bg-surface-container-lowest text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-colors" data-filter="Emergency" type="button">
+                Emergencies (<span id="countEmergency">0</span>)
+              </button>
+              <button class="filter-tab px-3 py-1.5 rounded-lg bg-surface-container-lowest text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-colors" data-filter="Waiting" type="button">
+                Waiting Queue (<span id="countWaiting">0</span>)
+              </button>
+              <button class="filter-tab px-3 py-1.5 rounded-lg bg-surface-container-lowest text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-colors" data-filter="Routine" type="button">
+                Confirmed Routine (<span id="countRoutine">0</span>)
+              </button>
+            </div>
+            <div class="flex items-center gap-space-sm">
+              <div class="relative">
+                <input class="bg-surface-container-lowest text-on-surface placeholder:text-outline text-body-sm font-body-sm pl-8 pr-3 py-1.5 rounded-lg border border-outline-variant focus:outline-none focus:ring-1 focus:ring-primary shadow-sm" id="tableSearch" placeholder="Filter table rows..." type="text"/>
+                <span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-outline text-[14px]">search</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Data Table Canvas -->
+          <div class="w-full overflow-x-auto">
+            <table class="w-full text-left border-collapse" id="schedulerTable">
+              <thead>
+                <tr class="bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider select-none">
+                  <th class="py-3 px-4 w-12 text-center">
+                    <input class="rounded accent-primary cursor-pointer w-4 h-4" id="selectAllCheckbox" type="checkbox"/>
+                  </th>
+                  <th class="py-3 px-4">Record ID</th>
+                  <th class="py-3 px-4">Priority / Type</th>
+                  <th class="py-3 px-4">Patient Profile</th>
+                  <th class="py-3 px-4">Attending Physician</th>
+                  <th class="py-3 px-4">Scheduled Slot</th>
+                  <th class="py-3 px-4">Status</th>
+                  <th class="py-3 px-4 text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody class="font-body-md text-body-md" id="queueTableBody">
+                <!-- Rows injected dynamically via API -->
+              </tbody>
+            </table>
+            <!-- Empty State Notice -->
+            <div id="emptyMsg" class="hidden flex-col items-center justify-center py-12 text-center text-outline">
+              <span class="material-symbols-outlined text-[48px] mb-2 opacity-50">event_available</span>
+              <p class="font-label-lg text-label-lg text-on-surface-variant">No appointments registered in the database.</p>
+              <p class="font-body-sm text-body-sm">Use the Intake panel above or run the Concurrency Demo to populate.</p>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Bottom Global Status Footer -->
+  <footer class="fixed bottom-0 left-0 right-0 h-8 bg-surface-container-lowest shadow-[0_-1px_6px_rgba(0,0,0,0.04)] z-50 flex items-center justify-between px-gutter-desktop border-t border-outline-variant/30">
+    <div class="flex items-center gap-space-sm">
+      <span class="relative flex h-2 w-2">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary-container opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-2 w-2 bg-secondary"></span>
+      </span>
+      <span class="font-body-sm text-body-sm text-on-surface-variant" id="systemSyncStatus">REST API Connected • Node.js/Express SQLite</span>
+    </div>
+    <div class="flex items-center gap-space-md">
+      <span class="font-label-sm text-label-sm text-on-surface-variant">Clinical Scheduler Engine v1.0.0</span>
+    </div>
+  </footer>
+
+  <!-- Frontend Application Logic Connected to REST API -->
+  <script>
+    (function () {
+      const API_BASE = window.location.origin.startsWith('http')
+        ? `${window.location.origin}/api/appointments`
+        : 'http://localhost:3000/api/appointments';
+
+      let currentAppointments = [];
+      let currentFilter = 'all';
+
+      // DOM Elements
+      const bookingForm = document.getElementById('bookingForm');
+      const patientNameInput = document.getElementById('patientName');
+      const schedTypeSelect = document.getElementById('schedType');
+      const bookBtn = document.getElementById('bookBtn');
+      const cancelSelectedBtn = document.getElementById('cancelSelectedBtn');
+      const runThreadDemoBtn = document.getElementById('runThreadDemoBtn');
+      const exportCsvBtn = document.getElementById('exportCsvBtn');
+      const resetAllBtn = document.getElementById('resetAllBtn');
+      const tableBody = document.getElementById('queueTableBody');
+      const emptyMsg = document.getElementById('emptyMsg');
+      const selectAllCheckbox = document.getElementById('selectAllCheckbox');
+      const tableSearch = document.getElementById('tableSearch');
+      const filterTabs = document.querySelectorAll('.filter-tab');
+      const emergencyAlertBanner = document.getElementById('emergencyAlertBanner');
+      const emergencyAlertText = document.getElementById('emergencyAlertText');
+      const emergencyAlertSubtext = document.getElementById('emergencyAlertSubtext');
+      const ackEmergencyBtn = document.getElementById('ackEmergencyBtn');
+      const toastContainer = document.getElementById('toastContainer');
+
+      // Toast Notification System
+      function showToast(message, type = 'info') {
+        const toast = document.createElement('div');
+        const bg = type === 'error' ? 'bg-error text-on-error' : (type === 'success' ? 'bg-secondary text-on-secondary' : 'bg-inverse-surface text-inverse-on-surface');
+        toast.className = `toast-anim pointer-events-auto px-4 py-3 rounded-lg shadow-lg font-body-md text-body-md flex items-center justify-between gap-3 ${bg}`;
+        toast.innerHTML = `
+          <span>${message}</span>
+          <button type="button" class="text-white/80 hover:text-white">&times;</button>
+        `;
+        toast.querySelector('button').onclick = () => toast.remove();
+        toastContainer.appendChild(toast);
+        setTimeout(() => toast.remove(), 4000);
+      }
+
+      // Fetch and Render Appointments from Backend API
+      async function refreshAppointments() {
+        try {
+          const res = await fetch(API_BASE);
+          if (!res.ok) throw new Error(`HTTP ${res.status}: Failed to load appointments`);
+          const data = await res.json();
+          currentAppointments = data.appointments || [];
+          
+          updateTelemetry(data.stats);
+          renderTable();
+          document.getElementById('systemSyncStatus').textContent = `REST API Connected • Sync ${new Date().toLocaleTimeString()}`;
+        } catch (err) {
+          console.error('Error fetching appointments:', err);
+          document.getElementById('systemSyncStatus').textContent = `API Disconnected: ${err.message}`;
+        }
+      }
+
+      // Update Top Status Cards and Filter Tab Counts
+      function updateTelemetry(stats) {
+        if (!stats) return;
+        document.getElementById('countAll').textContent = stats.total;
+        document.getElementById('countEmergency').textContent = stats.totalEmergency;
+        document.getElementById('countWaiting').textContent = stats.totalWaiting;
+        document.getElementById('countRoutine').textContent = stats.totalRoutine;
+        
+        document.getElementById('activeQueuedCounter').textContent = stats.totalWaiting;
+        document.getElementById('traumaBaysCounter').textContent = `${stats.totalBooked} / ${stats.slotsTotal} Booked`;
+      }
+
+      // Render the appointments table
+      function renderTable() {
+        tableBody.innerHTML = '';
+        const query = (tableSearch?.value || '').toLowerCase().trim();
+
+        const filtered = currentAppointments.filter(app => {
+          // Tab Filter
+          if (currentFilter === 'Emergency' && app.type !== 'EMERGENCY') return false;
+          if (currentFilter === 'Waiting' && app.status !== 'WAITING') return false;
+          if (currentFilter === 'Routine' && (app.type !== 'ROUTINE' || app.status !== 'CONFIRMED')) return false;
+
+          // Text Search Filter
+          if (query) {
+            const rowText = `${app.id} ${app.patient} ${app.doctor || ''} ${app.time} ${app.status} ${app.type}`.toLowerCase();
+            if (!rowText.includes(query)) return false;
+          }
+          return true;
+        });
+
+        if (filtered.length === 0) {
+          emptyMsg.classList.remove('hidden');
+          emptyMsg.classList.add('flex');
+        } else {
+          emptyMsg.classList.add('hidden');
+          emptyMsg.classList.remove('flex');
+        }
+
+        filtered.forEach(app => {
+          const tr = document.createElement('tr');
+          const isEmergency = app.type === 'EMERGENCY';
+          const isWaiting = app.status === 'WAITING';
+
+          if (isEmergency && !isWaiting) {
+            tr.className = 'bg-error-container text-on-error-container hover:bg-tertiary-fixed transition-colors border-b border-outline-variant/30';
+          } else if (isWaiting) {
+            tr.className = 'bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors border-b border-outline-variant/30';
+          } else {
+            tr.className = 'bg-surface-container-lowest text-on-surface hover:bg-surface-container-low transition-colors border-b border-outline-variant/30';
+          }
+
+          tr.setAttribute('data-id', app.id);
+          tr.setAttribute('data-type', app.type);
+          tr.setAttribute('data-status', app.status);
+
+          tr.innerHTML = `
+            <td class="py-3.5 px-4 text-center">
+              <input type="checkbox" class="row-checkbox rounded accent-primary cursor-pointer w-4 h-4" data-id="${app.id}" />
+            </td>
+            <td class="py-3.5 px-4 font-label-md text-label-md font-bold ${isEmergency ? 'text-tertiary' : 'text-on-surface-variant'}">
+              #MED-${String(app.id).padStart(4, '0')}
+            </td>
+            <td class="py-3.5 px-4">
+              ${isEmergency ? `
+                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-tertiary text-on-tertiary font-label-sm text-label-sm font-bold shadow-sm">
+                  <span class="material-symbols-outlined text-[13px] animate-pulse">crisis_alert</span>
+                  STAT EMERGENCY
+                </span>
+              ` : `
+                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full ${isWaiting ? 'bg-surface-container-highest text-on-surface' : 'bg-surface-container text-on-surface-variant'} font-label-sm text-label-sm font-semibold">
+                  Routine
+                </span>
+              `}
+            </td>
+            <td class="py-3.5 px-4">
+              <div class="flex flex-col">
+                <span class="font-label-lg text-label-lg font-bold text-on-surface">${app.patient}</span>
+                <span class="font-body-sm text-body-sm text-on-surface-variant">
+                  ${isEmergency ? 'STAT Trauma Priority 1' : 'Outpatient Routine Priority 4'}
+                </span>
+              </div>
+            </td>
+            <td class="py-3.5 px-4">
+              ${app.doctor ? `
+                <div class="flex items-center gap-1.5">
+                  <span class="material-symbols-outlined text-[16px] text-primary">local_hospital</span>
+                  <span class="font-label-md text-label-md font-semibold text-on-surface">${app.doctor}</span>
+                </div>
+              ` : `
+                <span class="font-label-md text-label-md italic text-outline">Unassigned (Queue)</span>
+              `}
+            </td>
+            <td class="py-3.5 px-4">
+              <span class="font-label-md text-label-md font-bold ${isEmergency && !isWaiting ? 'text-tertiary' : 'text-on-surface'}">
+                ${app.time}
+              </span>
+            </td>
+            <td class="py-3.5 px-4">
+              ${isWaiting ? `
+                <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-surface-container-highest text-on-surface font-label-sm text-label-sm font-bold">
+                  <span class="material-symbols-outlined text-[13px] animate-spin" style="animation-duration: 6s;">hourglass_empty</span>
+                  Waiting Queue
+                </span>
+              ` : (isEmergency ? `
+                <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-tertiary-container text-on-tertiary-container font-label-sm text-label-sm font-bold">
+                  <span class="w-1.5 h-1.5 rounded-full bg-tertiary-fixed-dim animate-ping"></span>
+                  Trauma Bay Allocated
+                </span>
+              ` : `
+                <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-semibold">
+                  <span class="material-symbols-outlined text-[13px]">check_circle</span>
+                  Confirmed
+                </span>
+              `)}
+            </td>
+            <td class="py-3.5 px-4 text-right">
+              <button type="button" class="cancel-single-btn text-error hover:text-on-error-container font-label-md text-label-md inline-flex items-center p-1.5 rounded hover:bg-error-container/30 transition-colors" title="Cancel Appointment" data-id="${app.id}">
+                <span class="material-symbols-outlined text-[18px]">cancel</span>
+              </button>
+            </td>
+          `;
+
+          tableBody.appendChild(tr);
+        });
+
+        // Attach cancel button listeners
+        tableBody.querySelectorAll('.cancel-single-btn').forEach(btn => {
+          btn.addEventListener('click', async (e) => {
+            const id = btn.getAttribute('data-id');
+            await cancelAppointmentApi(id);
+          });
+        });
+      }
+
+      // API Call: Book Appointment
+      bookingForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const patient = patientNameInput.value.trim();
+        const schedType = schedTypeSelect.value;
+        const emergency = schedType === 'Emergency';
+
+        if (!patient) return;
+
+        bookBtn.disabled = true;
+        bookBtn.innerHTML = `
+          <span class="material-symbols-outlined text-[18px] animate-spin">sync</span>
+          <span>Booking...</span>
+        `;
+
+        try {
+          const res = await fetch(`${API_BASE}/book`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ patient, emergency })
+          });
+
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.error || 'Booking failed');
+
+          patientNameInput.value = '';
+
+          if (data.bumpedPatient) {
+            // Emergency bump occurred! Show emergency alert banner
+            emergencyAlertText.textContent = `CRITICAL BUMP: Emergency patient ${data.appointment.patient} allocated slot!`;
+            emergencyAlertSubtext.textContent = `Routine patient "${data.bumpedPatient}" was bumped from ${data.appointment.doctor} (${data.appointment.time}) to the priority waitlist.`;
+            emergencyAlertBanner.classList.remove('hidden');
+            emergencyAlertBanner.classList.add('flex');
+            showToast(`EMERGENCY BUMP: ${data.appointment.patient} bumped ${data.bumpedPatient}`, 'error');
+          } else if (emergency && data.appointment.slot) {
+            emergencyAlertText.textContent = `STAT Emergency Confirmed: ${data.appointment.patient} assigned to ${data.appointment.doctor} (${data.appointment.time})`;
+            emergencyAlertSubtext.textContent = 'Trauma bay prepared. Anesthesiology and trauma team paged.';
+            emergencyAlertBanner.classList.remove('hidden');
+            emergencyAlertBanner.classList.add('flex');
+            showToast(`Emergency booked for ${patient}`, 'success');
+          } else {
+            showToast(data.message || `Booked appointment for ${patient}`, 'success');
+          }
+
+          await refreshAppointments();
+        } catch (err) {
+          showToast(err.message, 'error');
+        } finally {
+          bookBtn.disabled = false;
+          bookBtn.innerHTML = `
+            <span class="material-symbols-outlined text-[18px]">add_circle</span>
+            <span>Book Patient</span>
+          `;
+        }
+      });
+
+      // API Call: Cancel Appointment
+      async function cancelAppointmentApi(id) {
+        if (!confirm(`Cancel appointment #${id}? This will immediately promote any waiting candidate.`)) return;
+
+        try {
+          const res = await fetch(`${API_BASE}/cancel/${id}`, {
+            method: 'POST'
+          });
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.error || 'Failed to cancel');
+
+          if (data.promoted && data.promoted.length > 0) {
+            const names = data.promoted.map(p => `${p.patient} (${p.doctor} at ${p.time})`).join(', ');
+            showToast(`Canceled #${id}. Promoted: ${names}!`, 'success');
+          } else {
+            showToast(`Appointment #${id} canceled successfully.`, 'info');
+          }
+
+          await refreshAppointments();
+        } catch (err) {
+          showToast(err.message, 'error');
+        }
+      }
+
+      // API Call: Reset All
+      resetAllBtn.addEventListener('click', async () => {
+        if (!confirm('RESET ALL: This will delete ALL appointments and clear the queue. Proceed?')) return;
+        try {
+          const res = await fetch(`${API_BASE}/reset`, { method: 'POST' });
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.error || 'Reset failed');
+          showToast(data.message, 'info');
+          emergencyAlertBanner.classList.add('hidden');
+          emergencyAlertBanner.classList.remove('flex');
+          await refreshAppointments();
+        } catch (err) {
+          showToast(err.message, 'error');
+        }
+      });
+
+      // API Call: Export CSV
+      exportCsvBtn.addEventListener('click', () => {
+        window.location.href = `${API_BASE}/export`;
+        showToast('Downloading appointments CSV...', 'info');
+      });
+
+      // API Call: Concurrency Demo (10 concurrent requests via Promise.all)
+      runThreadDemoBtn.addEventListener('click', async () => {
+        runThreadDemoBtn.disabled = true;
+        const origHtml = runThreadDemoBtn.innerHTML;
+        runThreadDemoBtn.innerHTML = `
+          <span class="material-symbols-outlined text-primary text-[18px] animate-spin">sync</span>
+          <span>Simulating Concurrency...</span>
+        `;
+
+        try {
+          const res = await fetch(`${API_BASE}/demo`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ count: 10 })
+          });
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.error || 'Demo failed');
+
+          showToast(`Concurrency Demo: 10 concurrent requests handled. Double Bookings: ${data.verification.doubleBookingsDetected}!`, 'success');
+          await refreshAppointments();
+        } catch (err) {
+          showToast(err.message, 'error');
+        } finally {
+          runThreadDemoBtn.disabled = false;
+          runThreadDemoBtn.innerHTML = origHtml;
+        }
+      });
+
+      // Cancel Selected Checked Rows
+      cancelSelectedBtn.addEventListener('click', async () => {
+        const checked = Array.from(tableBody.querySelectorAll('.row-checkbox:checked'));
+        if (checked.length === 0) {
+          showToast('No appointments selected.', 'info');
+          return;
+        }
+
+        if (!confirm(`Cancel ${checked.length} selected appointment(s)?`)) return;
+
+        for (const cb of checked) {
+          const id = cb.getAttribute('data-id');
+          await fetch(`${API_BASE}/cancel/${id}`, { method: 'POST' });
+        }
+        showToast(`Canceled ${checked.length} appointment(s).`, 'info');
+        selectAllCheckbox.checked = false;
+        await refreshAppointments();
+      });
+
+      // Select All Checkbox
+      selectAllCheckbox.addEventListener('change', (e) => {
+        tableBody.querySelectorAll('.row-checkbox').forEach(cb => {
+          cb.checked = e.target.checked;
+        });
+      });
+
+      // Acknowledge Emergency Banner
+      ackEmergencyBtn.addEventListener('click', () => {
+        emergencyAlertBanner.classList.add('hidden');
+        emergencyAlertBanner.classList.remove('flex');
+      });
+
+      // Filter Tabs
+      filterTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          filterTabs.forEach(t => {
+            t.className = 'filter-tab px-3 py-1.5 rounded-lg bg-surface-container-lowest text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-colors';
+          });
+          tab.className = 'filter-tab px-3 py-1.5 rounded-lg bg-primary text-on-primary font-label-md text-label-md shadow-sm transition-colors';
+          currentFilter = tab.getAttribute('data-filter');
+          renderTable();
+        });
+      });
+
+      // Real-time table search input
+      tableSearch.addEventListener('input', () => {
+        renderTable();
+      });
+
+      // Initial Data Load
+      refreshAppointments();
+    })();
+  </script>
+</body>
+</html>
